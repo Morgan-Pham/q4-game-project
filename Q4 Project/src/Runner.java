@@ -24,8 +24,11 @@ import javax.swing.Timer;
 
 public class Runner extends JPanel implements ActionListener, MouseListener, KeyListener{
 	
-	Miner m = new Miner();
-	Background b = new Background();
+	Miner m = new Miner(0,0);
+	Background bg = new Background();
+	Coin1 b = new Coin1();
+	Coin2 e = new Coin2();
+	Coin3 d = new Coin3();
 	
 	public Runner() {
 		JFrame f = new JFrame("Dino Game");
