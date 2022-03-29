@@ -16,7 +16,7 @@ public class Miner{
 	private AffineTransform tx;
 	
 	public Miner(int x, int y) {
-		img = getImage("/imgs/yellowdino.gif"); //load the image for Tree
+		img = getImage("/imgs/mineridle.png"); //load the image for Tree
 		this.x = x;
 		this.y = y;
 		tx = AffineTransform.getTranslateInstance(x, y);

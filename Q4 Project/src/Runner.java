@@ -3,6 +3,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -24,7 +25,7 @@ import javax.swing.Timer;
 
 public class Runner extends JPanel implements ActionListener, MouseListener, KeyListener{
 	
-	Miner m = new Miner(0,0);
+	Miner m = new Miner(600,500);
 	Background bg = new Background();
 	Coin1 b = new Coin1();
 	Coin2 e = new Coin2();
@@ -45,7 +46,10 @@ public class Runner extends JPanel implements ActionListener, MouseListener, Key
 	public static void main(String[] arg) {
 		Runner r = new Runner();
 	}
-	
+	public void paint(Graphics g) {
+		super.paintComponent(g);
+		m.paint(g);
+	}
 	
 	
 	
