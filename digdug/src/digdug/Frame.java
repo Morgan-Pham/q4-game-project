@@ -24,11 +24,17 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-	
+	/*	get an attack that destroys the closest square to the miner
+	 * 	get collision and jumping
+	 * 
+	 */
 
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
 	Miner m = new Miner(100, 400);
 	Goblins c = new Goblins(1000, 45);
+	Bitcoin b = new Bitcoin(100, 100);
+	Ethereum e = new Ethereum(100, 100);
+	Doge d = new Doge(100, 100);
 	Background bg = new Background();
 	Background2 bg2 = new Background2();
 	ArrayList<Goblins> goblinList = new ArrayList<>();
@@ -38,7 +44,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	public void paint(Graphics g) {
 		bg.paint(g);
 		bg2.paint(g);
-		
+		b.paint(g);
+		e.paint(g);
+		d.paint(g);
 		
 		m.paint(g);
 		if(test = true) {
@@ -51,7 +59,6 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			if(c.getX() == 0) {
 				
 			}
-		}
 		*/
 	
 		Font f = new Font("Times New Roman", Font.BOLD, 50);
@@ -136,6 +143,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			m.setX(m.getX()-10);
 		}
 		
+		if(arg0.getKeyCode() == 38) {
+			m.jump();
+		}
 	}
 
 	@Override
