@@ -52,7 +52,7 @@ public class Miner{
 	
 
 	public Miner(int x, int y) {
-		img = getImage("miner.png"); //load the image for Tree
+		img = getImage("minerR.png"); //load the image for Tree
 		this.x = x;
 		this.y = y;
 		tx = AffineTransform.getTranslateInstance(x, y);
@@ -101,14 +101,14 @@ public class Miner{
 	//update the picture variable location
 	private void update() {
 		tx.setToTranslation(x, y);
-		tx.scale(.2, .2);
+		tx.scale(1.0, 1.0);
 		
 		
 	}
 
 	private void init(double a, double b) {
 		tx.setToTranslation(a, b);
-		tx.scale(0.5, 0.5);
+		tx.scale(1.0, 1.0);
 	}
 
 	private Image getImage(String path) {

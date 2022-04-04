@@ -60,7 +60,6 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				
 			}
 		*/
-	
 		Font f = new Font("Times New Roman", Font.BOLD, 50);
 		g.setFont(f);
 		g.drawString("Bitcoin Miner", 340, 50);
@@ -137,10 +136,12 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		System.out.println(arg0.getKeyCode());
 		if(arg0.getKeyCode() == 39) {
 			m.setX(m.getX()+10);
+			m.changePicture("minerR.png");
 		}
 		
 		if(arg0.getKeyCode() == 37) {
 			m.setX(m.getX()-10);
+			m.changePicture("minerL.png");
 		}
 		
 		if(arg0.getKeyCode() == 38) {
