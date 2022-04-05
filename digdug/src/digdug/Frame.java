@@ -32,21 +32,29 @@ import javax.swing.Timer;
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
 	Miner m = new Miner(100, 400);
 	Goblins c = new Goblins(1000, 45);
-	Bitcoin b = new Bitcoin(100, 100);
-	Ethereum e = new Ethereum(100, 100);
-	Doge d = new Doge(100, 100);
 	Background bg = new Background();
 	Background2 bg2 = new Background2();
 	ArrayList<Goblins> goblinList = new ArrayList<>();
+	ArrayList<Bitcoin> bList = new ArrayList<Bitcoin>();
+	ArrayList<Doge> dList = new ArrayList<Doge>();
+	ArrayList<Ethereum> eList = new ArrayList<Ethereum>();
 	private int score = 0;
 	private boolean test = true;
 	
+
 	public void paint(Graphics g) {
 		bg.paint(g);
-		bg2.paint(g);
-		b.paint(g);
-		e.paint(g);
-		d.paint(g);
+		for(Bitcoin b: bList) {
+			b.paint(g);
+		}
+		for(Doge d: dList) {
+			d.paint(g);
+		}
+		for(Ethereum e: eList) {
+			e.paint(g);
+		}
+		//bg2.paint(g);
+		
 		
 		m.paint(g);
 		if(test = true) {
@@ -85,11 +93,26 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
 	
-	
+		
 		for(int i = 0; i < 100; i++) {
 			Goblins temp2 = new Goblins(500*i, 450);
 			goblinList.add(temp2);
+		} 
+		for(int i = 0; i<6; i++) {
+			Bitcoin temp = new Bitcoin((int)(Math.random()*800)+1, (int)(Math.random()*250)+250);
+			bList.add(temp);
 		}
+		for(int i = 0; i<6; i++) {
+			Doge temp = new Doge((int)(Math.random()*800)+1, (int)(Math.random()*250)+250);
+			dList.add(temp);
+		}
+		for(int i = 0; i<6; i++) {
+			Ethereum temp = new Ethereum((int)(Math.random()*800)+1, (int)(Math.random()*250)+250);
+			eList.add(temp);
+		}
+		
+		
+		
 	}
 	
 	
