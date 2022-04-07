@@ -34,6 +34,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	Goblins c = new Goblins(1000, 45);
 	Background bg = new Background();
 	Background2 bg2 = new Background2();
+	Bitcoin b;
+	Doge d;
+	Ethereum e;
 	ArrayList<Goblins> goblinList = new ArrayList<>();
 	ArrayList<Bitcoin> bList = new ArrayList<Bitcoin>();
 	ArrayList<Doge> dList = new ArrayList<Doge>();
@@ -111,8 +114,10 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			eList.add(temp);
 		}
 		
-		
-		
+		if(m.getX() == b.getX() && m.getY() == b.getY()) || m.getX() == b.getX()+60 && m.getY() == b.getY()+60){
+			b.setX(1000);
+		}
+	
 	}
 	
 	
@@ -120,7 +125,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 	
-		
+		System.out.println(arg0.getX()+" "+arg0.getY());
 	}
 
 	@Override
