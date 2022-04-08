@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,10 +41,11 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	ArrayList<Goblins> goblinList = new ArrayList<>();
 	private int score = 0;
 	private boolean test = true;
+	private Block[][] rect = new Block[10][8];
 	
 	public void paint(Graphics g) {
-		bg.paint(g);
-		bg2.paint(g);
+		//bg.paint(g);
+		//bg2.paint(g);
 		b.paint(g);
 		e.paint(g);
 		d.paint(g);
@@ -54,6 +56,26 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				m.setY(430);
 			}
 		}
+//		private Block[][] rect = new Block[10][8];
+			for(int i = 0 ; i < rect.length; i++) {
+				for(int j = 0 ; j < rect[0].length; j++) {
+					rect[i][j].paint(g);
+					//check collision
+					//this is the rectangle's area
+					int rectX = rect[i][j].getX();
+					int rectY = rect[i][j].getY();
+					
+					//represent the objects as Java Rectangles
+					Rectangle a = new Rectangle(rect[i][j].getX(), rect[i][j].getY(), 100, 100);
+					Rectangle b = new Rectangle(m.getX(), m.getY(), 135, 135);
+					
+					 if(a.intersects(b)) {
+						 if(rectX == m.getX() + 15 && rectX + 100 == m.getX() - 15) {
+							 rect[i][j].setX(-2222222);
+						 }
+					 }
+				}
+			}
 	/*	for(Goblins c : goblinList) {
 			c.paint(g);
 			if(c.getX() == 0) {
@@ -100,6 +122,10 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		
 	}
 
+	public void MOVE() {
+		
+
+	}
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
@@ -135,12 +161,12 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		// TODO Auto-generated method stub
 		System.out.println(arg0.getKeyCode());
 		if(arg0.getKeyCode() == 39) {
-			m.setX(m.getX()+10);
+			m.setX(m.getX()+15);
 			m.changePicture("minerR.png");
 		}
 		
 		if(arg0.getKeyCode() == 37) {
-			m.setX(m.getX()-10);
+			m.setX(m.getX()-15);
 			m.changePicture("minerL.png");
 		}
 		
