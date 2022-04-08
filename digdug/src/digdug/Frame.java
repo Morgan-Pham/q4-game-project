@@ -57,7 +57,12 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			e.paint(g);
 		}
 		//bg2.paint(g);
-		
+		for(Bitcoin b : bList) {
+			if((m.getX() >= b.getX() && m.getX() <= b.getX()+300 && m.getY() >= b.getY() && m.getY() <= b.getY()+300) || (m.getX() >= b.getX() && m.getX() <= b.getX()-300 && m.getY() >= b.getY() && m.getY() <= b.getY()-300)){
+				b.setX(1000);
+			}
+			//miner 135 80
+		}
 		
 		m.paint(g);
 		if(test = true) {
@@ -82,18 +87,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	public static void main(String[] arg) {
 		Frame f = new Frame();
 		
-		try {
-			
-			if(b.getX() >= m.getX() && b.getX() <= m.getX()+100) && b.getY() >= m.getY() && b.getY() <= m.getY()+100 || b.getX() >= m.getX() && b.getX() <= m.getX()-100 && b.getY() >= m.getY() && b.getY() <= m.getY()-100)){
-					b.setX(1000);
-				}
-		
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			System.out.println(e);
-		}
-	
 	}
+	
+	
 	public Frame() {
 		JFrame f = new JFrame("Bitcoin Miner");
 		f.setSize(new Dimension(900, 600));
@@ -125,12 +121,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			Ethereum temp = new Ethereum((int)(Math.random()*800)+1, (int)(Math.random()*250)+250);
 			eList.add(temp);
 		}
-	
-
 		
-		//if(b.getX() >= m.getX() && b.getX() <= m.getX()+100) && b.getY() >= m.getY() && b.getY() <= m.getY()+100 || b.getX() >= m.getX() && b.getX() <= m.getX()-100 && b.getY() >= m.getY() && b.getY() <= m.getY()-100)){
-		//	b.setX(1000);
-		//}
+		
 	
 	}
 	
