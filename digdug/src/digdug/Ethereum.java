@@ -43,21 +43,20 @@ public class Ethereum {
 		//these are the 2 lines of code needed draw an image on the screen
 		Graphics2D g2 = (Graphics2D) g;
 		g2.drawImage(img, tx, null);
-		x = 10;
 		update();
 	}
 	
 	//update the picture variable location
 	private void update() {
 		tx.setToTranslation(x, y);
-		tx.scale(.1, .1);
+		tx.scale(0.15, 0.15);
 		
 		
 	}
 
 	private void init(double a, double b) {
 		tx.setToTranslation(a, b);
-		tx.scale(0.1, 0.1);
+		tx.scale(0.15, 0.15);
 	}
 
 	private Image getImage(String path) {
