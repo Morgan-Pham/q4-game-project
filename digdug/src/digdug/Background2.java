@@ -17,7 +17,7 @@ public class Background2{
 	private AffineTransform tx;
 
 	public Background2() {
-		img = getImage("yes.jpg"); //load the image for Tree
+		img = getImage("grass.jpg"); //load the image for Tree
 		this.x = x;
 
 		tx = AffineTransform.getTranslateInstance(x, y);
@@ -58,7 +58,7 @@ public class Background2{
 	//update the picture variable location
 	private void update() {
 		tx.setToTranslation(x, y);
-		tx.scale(1.5, 1.0);
+		tx.scale(1.0, 1.0);
 		x = 0;
 		y = 200;
 	}
@@ -78,5 +78,4 @@ public class Background2{
 		}
 		return tempImage;
 	}
-
 }

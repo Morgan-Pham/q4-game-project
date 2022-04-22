@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -13,7 +14,7 @@ import java.net.URL;
 
 public class Miner{
 	
-	private int x, y; 
+	private int x, y, width, height; 
 	private double fallSpeed;
 	private boolean grounded;
 	private double gravity;
@@ -25,11 +26,23 @@ public class Miner{
 	public int getY() {
 		return y;
 	}
+	public int getWidth() {
+		return width;
+	}
+	public int getHeight() {
+		return height;
+	}
 	public void setY(int newY) {
 		y = newY;
 	}
 	public void setX(int newX) {
 		x = newX;
+	}
+	public void setWidth(int newWidth) {
+		width = newWidth;
+	}
+	public void setHeight(int newHeight) {
+		height = newHeight;
 	}
 	public double getFallSpeed() {
 		return fallSpeed;
@@ -63,6 +76,12 @@ public class Miner{
 		grounded = false;
 	}
 	
+	protected void getImageDimensions() {
+
+        width = img.getWidth(null);
+        height = img.getHeight(null);
+    }
+	
 	public void changePicture(String newFileName) {
 		img = getImage(newFileName);
 		init(x, y);
@@ -78,8 +97,8 @@ public class Miner{
 		if(gravity == 0) {
 			grounded = true;
 		}
-		if(y > 200) {
-			y = 200;
+		if(y > 100) {
+			y = 100;
 			fallSpeed = 0;
 			gravity = 0;
 		}
@@ -98,6 +117,11 @@ public class Miner{
 			fallSpeed = 100;
 		}
 	}
+	
+	public Rectangle getBoundsM() {
+	    return new Rectangle(x, y, width, height);
+	}
+	 
 	//update the picture variable location
 	private void update() {
 		tx.setToTranslation(x, y);
@@ -120,6 +144,10 @@ public class Miner{
 			e.printStackTrace();
 		}
 		return tempImage;
+	}
+	public Rectangle getBounds() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,62 +27,68 @@ import javax.swing.Timer;
 
 	/*	get an attack that destroys the closest square to the miner
 	 * 	get collision and jumping
+	 *  get james' speed movement
+	 * get james' time thing
 	 * 
 	 */
 
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
-	Miner m = new Miner(100, 400);
+	Miner m = new Miner(100, 700);
 	Goblins c = new Goblins(1000, 45);
 	Background bg = new Background();
 	Background2 bg2 = new Background2();
 	Bitcoin b;
 	Doge d;
-	Ethereum e;
-	ArrayList<Goblins> goblinList = new ArrayList<>();
+	Ethereum et;
+	ArrayList<Goblins> goList = new ArrayList<>();
 	ArrayList<Bitcoin> bList = new ArrayList<Bitcoin>();
 	ArrayList<Doge> dList = new ArrayList<Doge>();
 	ArrayList<Ethereum> eList = new ArrayList<Ethereum>();
+	int[][] arr = new int[2048][2048];
 	private int score = 0;
 	private boolean test = true;
-	
+	boolean right;
+	boolean left;
+	private boolean ingame;
+	private Timer timer;
+	int time = 60;
+	counter timeCounter = new counter();
 
 	public void paint(Graphics g) {
 		bg.paint(g);
+		bg2.paint(g);
+	//if (ingame) {
 		for(Bitcoin b: bList) {
 			b.paint(g);
 		}
 		for(Doge d: dList) {
 			d.paint(g);
 		}
-		for(Ethereum e: eList) {
-			e.paint(g);
+		for(Ethereum et: eList) {
+			et.paint(g);
 		}
-		//bg2.paint(g);
-		for(Bitcoin b : bList) {
-			if((m.getX() >= b.getX() && m.getX() <= b.getX()+300 && m.getY() >= b.getY() && m.getY() <= b.getY()+300) || (m.getX() >= b.getX() && m.getX() <= b.getX()-300 && m.getY() >= b.getY() && m.getY() <= b.getY()-300)){
-				b.setX(1000);
-			}
-			//miner 135 80
-		}
-		
+	
 		m.paint(g);
 		if(test = true) {
-			if(m.getY() > 430) {
-				m.setY(430);
+			//if(m.getY() > 250) {
+				m.setY(250);
 			}
-		}
-	/*	for(Goblins c : goblinList) {
-			c.paint(g);
-			if(c.getX() == 0) {
-				
-			}
-		*/
+			//(m.getImage(), m.getX(), m.getY(),this));
+		//}
+		
+		
+		
 		Font f = new Font("Times New Roman", Font.BOLD, 50);
 		g.setFont(f);
 		g.drawString("Bitcoin Miner", 340, 50);
 		g.drawString(score+"", 800, 50);
-		Font e = new Font("Times New Roman", Font.BOLD, 20);
-		g.setFont(e);
+		g.drawString(String.valueOf(time), 365, 70);
+		if(timeCounter.getY()>=40) {
+			timeCounter.setY(0);
+			time--;
+		}
+		Font y = new Font("Times New Roman", Font.BOLD, 20);
+		g.setFont(y);
 	}
 	
 	public static void main(String[] arg) {
@@ -92,7 +99,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	
 	public Frame() {
 		JFrame f = new JFrame("Bitcoin Miner");
-		f.setSize(new Dimension(900, 600));
+		f.setSize(new Dimension(890, 990));
 		f.setBackground(Color.white);
 		f.add(this);
 		f.setResizable(false);
@@ -104,27 +111,37 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
 	
-		
-		for(int i = 0; i < 100; i++) {
-			Goblins temp2 = new Goblins(500*i, 450);
-			goblinList.add(temp2);
-		} 
-		for(int i = 0; i<6; i++) {
-			Bitcoin temp = new Bitcoin((int)(Math.random()*800)+1, (int)(Math.random()*250)+250);
+		for(int i = 0; i<11; i++) {
+			Bitcoin temp = new Bitcoin((int)(Math.random()*800)+1, (int)(Math.random()*700)+200);
 			bList.add(temp);
 		}
-		for(int i = 0; i<6; i++) {
-			Doge temp = new Doge((int)(Math.random()*800)+1, (int)(Math.random()*250)+250);
+		for(int i = 0; i<11; i++) {
+			Doge temp = new Doge((int)(Math.random()*800)+1, (int)(Math.random()*700)+200);
 			dList.add(temp);
 		}
-		for(int i = 0; i<6; i++) {
-			Ethereum temp = new Ethereum((int)(Math.random()*800)+1, (int)(Math.random()*250)+250);
+		for(int i = 0; i<11; i++) {
+			Ethereum temp = new Ethereum((int)(Math.random()*800)+1, (int)(Math.random()*700)+200);
 			eList.add(temp);
 		}
-		
-		
 	
 	}
+	
+	
+	public void checkCollisions() {
+
+        Rectangle r3 = m.getBoundsM();
+
+        for (Bitcoin b : bList) {
+            
+            Rectangle r2 = b.getBoundsB();
+
+            if (r3.intersects(r2)) {
+                
+                b.setX(1000);
+                
+            }
+        }
+    }
 	
 	
 	@Override
@@ -162,7 +179,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		repaint();
+		
 	}
+
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
@@ -171,15 +190,31 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		if(arg0.getKeyCode() == 39) {
 			m.setX(m.getX()+10);
 			m.changePicture("minerR.png");
+			right = true;
+			left = false;
 		}
 		
 		if(arg0.getKeyCode() == 37) {
 			m.setX(m.getX()-10);
 			m.changePicture("minerL.png");
+			left = true;
+			right = false;
 		}
 		
 		if(arg0.getKeyCode() == 38) {
 			m.jump();
+		}
+		
+		if(right == true) {
+			if(arg0.getKeyCode() == 32) {
+			m.changePicture("mineR.png");
+			}
+		}
+	
+		if(left == true) {
+			if(arg0.getKeyCode() == 32) {
+			m.changePicture("mineL.png");
+			}
 		}
 	}
 
@@ -187,7 +222,6 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
-
 	}
 
 	@Override
