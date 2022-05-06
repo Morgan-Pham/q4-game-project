@@ -55,7 +55,7 @@ public class Bitcoin {
 		visible = true;
 	}
 	
-	 protected void getImageDimensions() {
+	 public void getImageDimensions() {
 
 	        width = img.getWidth(null);
 	        height = img.getHeight(null);

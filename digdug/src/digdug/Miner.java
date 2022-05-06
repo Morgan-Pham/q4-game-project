@@ -76,7 +76,7 @@ public class Miner{
 		grounded = false;
 	}
 	
-	protected void getImageDimensions() {
+	public void getImageDimensions() {
 
         width = img.getWidth(null);
         height = img.getHeight(null);
