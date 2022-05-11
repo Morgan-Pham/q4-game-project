@@ -85,17 +85,19 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		
 		
 		
+		
 		Font f = new Font("Times New Roman", Font.BOLD, 50);
 		g.setFont(f);
 		g.drawString("Bitcoin Miner", 340, 50);
 		g.drawString(score+"", 800, 50);
-		g.drawString(String.valueOf(time), 365, 70);
+		g.drawString(String.valueOf(time), 45, 50);
 		if(timeCounter.getY()>=40) {
 			timeCounter.setY(0);
 			time--;
 		}
 		Font y = new Font("Times New Roman", Font.BOLD, 20);
 		g.setFont(y);
+		timeCounter.setY(timeCounter.getY()+1);
 	}
 	
 	public static void main(String[] arg) {
