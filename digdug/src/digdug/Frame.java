@@ -28,7 +28,7 @@ import javax.swing.Timer;
 	/*	get an attack that destroys the closest square to the miner
 	 * 	get collision and jumping
 	 *  get james' speed movement
-	 * get james' time thing
+	 * 
 	 * 
 	 */
 
@@ -62,7 +62,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		for(Bitcoin b: bList) {
 			b.paint(g);
 		Rectangle r3 = new Rectangle(m.getX(), m.getY(), m.getX()+10, m.getY()+5);
-	    Rectangle r2 = new Rectangle(b.getX(), b.getY(), b.getX()+500000, b.getY()+5);
+	    Rectangle r2 = new Rectangle(b.getX(), b.getY(), b.getX()+5, b.getY()+5);
 
 	    if (r3.intersects(r2)==true) {
 	       b.setX(1000);

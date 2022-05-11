@@ -65,7 +65,7 @@ public class Miner{
 	
 
 	public Miner(int x, int y) {
-		img = getImage("minerR.png"); //load the i.mage for Tree
+		img = getImage("minerR.png"); //load the image for Tree
 		this.x = x;
 		this.y = y;
 		tx = AffineTransform.getTranslateInstance(x, y);
