@@ -22,7 +22,7 @@ public class Background2{
 
 		tx = AffineTransform.getTranslateInstance(x, y);
 		init(x, y); 				//initialize the location of the image
-									//use your variables
+									//use your varia.bles
 	}
 
 	public void changePicture(String newFileName) {
