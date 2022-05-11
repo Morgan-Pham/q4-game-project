@@ -28,7 +28,7 @@ import javax.swing.Timer;
 	/*	get an attack that destroys the closest square to the miner
 	 * 	get collision and jumping
 	 *  get james' speed movement
-	 * 
+	 * get james' time thing
 	 * 
 	 */
 
