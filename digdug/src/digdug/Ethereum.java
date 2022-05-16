@@ -9,16 +9,16 @@ import java.net.URL;
 
 public class Ethereum {
 	private int x;
-	private double y; 
+	private int y; 
 	private Image img; 	
 	private AffineTransform tx;
 	public int getX() {
 		return x;
 	}
-	public double getY() {
+	public int getY() {
 		return y;
 	}
-	public void setY(double newY) {
+	public void setY(int newY) {
 		y = newY;
 	}
 	public void setX(int newX) {
@@ -49,14 +49,14 @@ public class Ethereum {
 	//update the picture variable location
 	private void update() {
 		tx.setToTranslation(x, y);
-		tx.scale(0.15, 0.15);
+		tx.scale(1.0, 1.0);
 		
 		
 	}
 
 	private void init(double a, double b) {
 		tx.setToTranslation(a, b);
-		tx.scale(0.15, 0.15);
+		tx.scale(1.0, 1.0);
 	}
 
 	private Image getImage(String path) {

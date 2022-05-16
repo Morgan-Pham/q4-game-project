@@ -77,14 +77,14 @@ public class Bitcoin {
 	//update the picture variable location
 	private void update() {
 		tx.setToTranslation(x, y);
-		tx.scale(.05, .05);
+		tx.scale(1.0, 1.0);
 		
 		
 	}
 
 	private void init(double a, double b) {
 		tx.setToTranslation(a, b);
-		tx.scale(0.05, 0.05);
+		tx.scale(1.0, 1.0);
 	}
 
 	private Image getImage(String path) {

@@ -1,5 +1,6 @@
 package digdug;
 
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -19,7 +20,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,85 +27,120 @@ import javax.swing.Timer;
 
 	/*	get an attack that destroys the closest square to the miner
 	 * 	get collision and jumping
-	 *  get james' speed movement
-	 * get james' time thing
-	 * 
 	 */
 
 public class Frame extends JPanel implements ActionListener, MouseListener, KeyListener {
-	Miner m = new Miner(100, 700);
-	Goblins c = new Goblins(1000, 45);
+	Miner m = new Miner(100, 150); 
 	Background bg = new Background();
 	Background2 bg2 = new Background2();
-	Bitcoin b;
-	Doge d;
-	Ethereum et;
-	ArrayList<Goblins> goList = new ArrayList<>();
-	ArrayList<Bitcoin> bList = new ArrayList<Bitcoin>();
-	ArrayList<Doge> dList = new ArrayList<Doge>();
-	ArrayList<Ethereum> eList = new ArrayList<Ethereum>();
-	int[][] arr = new int[2048][2048];
-	private int score = 0;
-	private boolean test = true;
+	Music me = new Music("bgmusic.wav", false);
 	boolean right;
 	boolean left;
-	private boolean ingame;
-	private Timer timer;
+	Bitcoin b;
+	Doge d;
+	Ethereum e;
+	ArrayList<Bitcoin> bList = new ArrayList<Bitcoin>();
+	ArrayList<kirby> kList = new ArrayList<kirby>();
+	ArrayList<Doge> dList = new ArrayList<Doge>();
+	ArrayList<Ethereum> eList = new ArrayList<Ethereum>();
+	ArrayList<Rectangle> arr = new ArrayList<Rectangle>();
+	private int score = 0;
 	int time = 60;
 	counter timeCounter = new counter();
-
+	
 	public void paint(Graphics g) {
-		
 		bg.paint(g);
 		bg2.paint(g);
-	
-		for(Bitcoin b: bList) {
+		for(int i = 0; i < arr.size(); i++) {
+	    	g.fillRect((int)arr.get(i).getX(), (int)arr.get(i).getY(), 50, 50);
+	    }
+		for(Bitcoin b: bList) { //collision for bitcoin
 			b.paint(g);
-		Rectangle r3 = new Rectangle(m.getX(), m.getY(), m.getX()+10, m.getY()+5);
-	    Rectangle r2 = new Rectangle(b.getX(), b.getY(), b.getX()+5, b.getY()+5);
-
-	    if (r3.intersects(r2)==true) {
+		Rectangle rm = new Rectangle(m.getX()+5, m.getY(), 85, 60);
+	    Rectangle rd = new Rectangle(b.getX(), b.getY(), 60, 60);
+	    
+	    if (rm.intersects(rd)==true) {
 	       b.setX(1000);
+	       score+=100;
 	    	}
 		}
-		for(Doge d: dList) {
+
+		for(Doge d: dList) { //collision for doge
 			d.paint(g);
+		Rectangle rm = new Rectangle(m.getX()+5, m.getY(), 85, 60);
+		Rectangle rd = new Rectangle(d.getX(), d.getY(), 60, 60);
+		    
+		    if (rm.intersects(rd)==true) {
+		       d.setX(1000);
+		       score+=20;
+		    }
 		}
-		for(Ethereum et: eList) {
-			et.paint(g);
-		}
-	
-		m.paint(g);
-		if(test = true) {
-			//if(m.getY() > 250) {
-				m.setY(250);
+		
+		for(Ethereum e: eList) { //collision for ethereum
+			e.paint(g);
+		Rectangle rm = new Rectangle(m.getX()+5, m.getY(), 85, 60);
+		Rectangle re = new Rectangle(e.getX(), e.getY(), 60, 60);
+			    
+			if (rm.intersects(re)==true) {
+			   e.setX(1000);
+			   score+=70;
 			}
-			//(m.getImage(), m.getX(), m.getY(),this));
-		//}.
+		}
 		
-		
-		
-		
+		for(kirby k: kList) {
+			k.paint(g);
+		Rectangle rm = new Rectangle(m.getX()+5, m.getY(), 85, 60);
+		Rectangle rk = new Rectangle(k.getX(), k.getY(), 60, 60);
+				    
+			if (rm.intersects(rk)==true) {
+				k.setX(1000);
+				score-=100;
+			}
+		}
+			
+		m.paint(g);
+		if(m.getY() <= 150) {
+			m.setY(150);
+		}
+		if(m.getX() <= 0) {
+			m.setX(0);
+		}
+		if(m.getX() >= 790) {
+			m.setX(790);
+		}
+		if(m.getY() >= 875) {
+			m.setY(875);
+		}
+	    
+
 		Font f = new Font("Times New Roman", Font.BOLD, 50);
 		g.setFont(f);
-		g.drawString("Bitcoin Miner", 340, 50);
-		g.drawString(score+"", 800, 50);
+		g.setColor(Color.yellow);
+		g.drawString("Crypto Miner", 290, 50);
+		g.drawString(score+"", 750, 50);
+		Font e = new Font("Times New Roman", Font.BOLD, 50);
+		g.setFont(e);
 		g.drawString(String.valueOf(time), 45, 50);
 		if(timeCounter.getY()>=40) {
 			timeCounter.setY(0);
 			time--;
 		}
-		Font y = new Font("Times New Roman", Font.BOLD, 20);
+		if(time == 0) {
+			Font t = new Font("Times New Roman", Font.BOLD, 100);
+			g.setFont(t);
+			g.drawString("UR DONE", 290, 150);
+			
+		}
+		Font y = new Font("Times New Roman", Font.BOLD, 30);
 		g.setFont(y);
+		g.setColor(Color.yellow);
 		timeCounter.setY(timeCounter.getY()+1);
+
 	}
 	
 	public static void main(String[] arg) {
-		Frame f = new Frame();
-		
+		Frame r = new Frame();
 	}
-	
-	
 	public Frame() {
 		JFrame f = new JFrame("Bitcoin Miner");
 		f.setSize(new Dimension(890, 990));
@@ -117,36 +152,33 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		f.addKeyListener(this);
 		Timer t = new Timer(16, this);
 		t.start();
+		me.play();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
-	
 		for(int i = 0; i<11; i++) {
-			Bitcoin temp = new Bitcoin((int)(Math.random()*800)+1, (int)(Math.random()*700)+200);
+			Bitcoin temp = new Bitcoin((int)(Math.random()*800)+1, (int)(Math.random()*700)+250);
 			bList.add(temp);
 		}
 		for(int i = 0; i<11; i++) {
-			Doge temp = new Doge((int)(Math.random()*800)+1, (int)(Math.random()*700)+200);
+			Doge temp = new Doge((int)(Math.random()*800)+1, (int)(Math.random()*700)+250);
 			dList.add(temp);
 		}
 		for(int i = 0; i<11; i++) {
-			Ethereum temp = new Ethereum((int)(Math.random()*800)+1, (int)(Math.random()*700)+200);
+			Ethereum temp = new Ethereum((int)(Math.random()*800)+1, (int)(Math.random()*700)+250);
 			eList.add(temp);
 		}
-	
+		for(int i = 0; i<21; i++) {
+			kirby temp = new kirby((int)(Math.random()*800)+1, (int)(Math.random()*700)+250);
+			kList.add(temp);
+		}
 	}
 	
 	
-	
-	private Rectangle Rectangle(int x, int y, int i, int j) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 	
-		System.out.println(arg0.getX()+" "+arg0.getY());
+		
 	}
 
 	@Override
@@ -177,32 +209,32 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		repaint();
-		
 	}
-
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		System.out.println(arg0.getKeyCode());
-		if(arg0.getKeyCode() == 39) {
+		if(arg0.getKeyCode() == 39) { //right
 			m.setX(m.getX()+10);
 			m.changePicture("minerR.png");
 			right = true;
 			left = false;
 		}
 		
-		if(arg0.getKeyCode() == 37) {
+		if(arg0.getKeyCode() == 37) { //left
 			m.setX(m.getX()-10);
 			m.changePicture("minerL.png");
 			left = true;
 			right = false;
 		}
 		
-		if(arg0.getKeyCode() == 38) {
-			m.jump();
+		if(arg0.getKeyCode() == 40) {  //down
+			if(m.getY() >= 150) {
+				m.setY(m.getY()+10);
+			}
 		}
-		
+	/*
 		if(right == true) {
 			if(arg0.getKeyCode() == 32) {
 			m.changePicture("mineR.png");
@@ -214,12 +246,39 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			m.changePicture("mineL.png");
 			}
 		}
+		*/
+		if(arg0.getKeyCode() == 38) {   //up
+			m.setY(m.getY()-10);
+			if(m.getY() >= 220) { //if underground while going up
+				arr.add(new Rectangle(m.getX()+30, m.getY(), 50, 50));
+			}
+		}
+		if(m.getY() >= 170) {
+			if(arg0.getKeyCode() == 39 || arg0.getKeyCode() == 40) {  //going right 
+				m.changePicture("mineR.png");
+				if(m.getY() >= 220) {
+					arr.add(new Rectangle(m.getX()+30, m.getY(), 50, 50));
+				}
+			}
+		}
+		if(m.getY() >= 170) {
+			if(arg0.getKeyCode() == 37 ) {    //underground and left
+				m.changePicture("mineL.png");
+				if(m.getY() >= 220) {
+					arr.add(new Rectangle(m.getX()+30, m.getY(), 50, 50));
+				}
+			}
+		}
+		if(m.getY() <= 160) {
+			m.changePicture("miner.png");  //when above ground
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
+
 	}
 
 	@Override

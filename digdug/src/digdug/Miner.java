@@ -44,24 +44,7 @@ public class Miner{
 	public void setHeight(int newHeight) {
 		height = newHeight;
 	}
-	public double getFallSpeed() {
-		return fallSpeed;
-	}
-	public void setFallSpeed(double fallSpeed) {
-		this.fallSpeed = fallSpeed;
-	}
-	public boolean isGrounded() {
-		return grounded;
-	}
-	public void setGrounded(boolean grounded) {
-		this.grounded = grounded;
-	}
-	public double getGravity() {
-		return gravity;
-	}
-	public void setGravity(double gravity) {
-		this.gravity = gravity;
-	}
+
 	
 
 	public Miner(int x, int y) {
@@ -71,9 +54,6 @@ public class Miner{
 		tx = AffineTransform.getTranslateInstance(x, y);
 		init(x, y);
 		
-		fallSpeed = 0.5;
-		gravity = 1.5;
-		grounded = false;
 	}
 	
 	public void getImageDimensions() {
@@ -91,48 +71,23 @@ public class Miner{
 		//these are the 2 lines of code needed draw an image on the screen
 		Graphics2D g2 = (Graphics2D) g;
 		g2.drawImage(img, tx, null);
-		y += fallSpeed;
-		fallSpeed += gravity;
+	
 		update();
-		if(gravity == 0) {
-			grounded = true;
-		}
-		if(y > 100) {
-			y = 100;
-			fallSpeed = 0;
-			gravity = 0;
-		}
+		
 	}
 	
-	public void jump() {
-		if(grounded) {
-			gravity = 1.5;
-			fallSpeed = 50*-0.5;
-			grounded = false;
-		}
-	}
-	
-	public void fall() {
-		if(grounded = false) {
-			fallSpeed = 100;
-		}
-	}
-	
-	public Rectangle getBoundsM() {
-	    return new Rectangle(x, y, width, height);
-	}
 	 
 	//update the picture variable location
 	private void update() {
 		tx.setToTranslation(x, y);
-		tx.scale(1.0, 1.0);
+		tx.scale(0.5, 0.5);
 		
 		
 	}
 
 	private void init(double a, double b) {
 		tx.setToTranslation(a, b);
-		tx.scale(1.0, 1.0);
+		tx.scale(0.5, 0.5);
 	}
 
 	private Image getImage(String path) {
@@ -144,10 +99,6 @@ public class Miner{
 			e.printStackTrace();
 		}
 		return tempImage;
-	}
-	public Rectangle getBounds() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
