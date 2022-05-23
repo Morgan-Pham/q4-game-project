@@ -34,26 +34,36 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	Background bg = new Background();
 	Background2 bg2 = new Background2();
 	Music me = new Music("bgmusic.wav", false);
-	boolean right;
-	boolean left;
 	Bitcoin b;
 	Doge d;
 	Ethereum e;
+	Rectangle r;
 	ArrayList<Bitcoin> bList = new ArrayList<Bitcoin>();
 	ArrayList<kirby> kList = new ArrayList<kirby>();
 	ArrayList<Doge> dList = new ArrayList<Doge>();
 	ArrayList<Ethereum> eList = new ArrayList<Ethereum>();
 	ArrayList<Rectangle> arr = new ArrayList<Rectangle>();
 	private int score = 0;
-	int time = 60;
+	int time = 20;
 	counter timeCounter = new counter();
-	
+
 	public void paint(Graphics g) {
 		bg.paint(g);
 		bg2.paint(g);
+		
 		for(int i = 0; i < arr.size(); i++) {
-	    	g.fillRect((int)arr.get(i).getX(), (int)arr.get(i).getY(), 50, 50);
-	    }
+				g.fillRect((int)arr.get(i).getX(), (int)arr.get(i).getY(), 50, 50);
+		}
+		
+		if(m.getSpeed() > 0 || m.getSpeed() < 0) {
+				arr.add(new Rectangle(m.getX(), m.getY()));
+				System.out.println(m.getX() + " " + m.getY());
+		} 
+		if(m.getSped() > 0 || m.getSped() < 0) {
+			arr.add(new Rectangle(m.getX(), m.getY()));
+			//g.fillRect((int)arr.get(i).getX(), (int)arr.get(i).getY(), 50, 50);
+		} 
+		
 		for(Bitcoin b: bList) { //collision for bitcoin
 			b.paint(g);
 		Rectangle rm = new Rectangle(m.getX()+5, m.getY(), 85, 60);
@@ -94,7 +104,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 				    
 			if (rm.intersects(rk)==true) {
 				k.setX(1000);
-				score-=100;
+				score-=50;
 			}
 		}
 			
@@ -126,10 +136,13 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			time--;
 		}
 		if(time == 0) {
-			Font t = new Font("Times New Roman", Font.BOLD, 100);
-			g.setFont(t);
-			g.drawString("UR DONE", 290, 150);
-			
+			Font h = new Font("Times New Roman", Font.BOLD, 200);
+			g.setFont(h);
+			g.setColor(Color.yellow);
+			g.drawString("UR DONE", 0, 500);
+		}
+		if(time == -1) {
+			System.exit(0);
 		}
 		Font y = new Font("Times New Roman", Font.BOLD, 30);
 		g.setFont(y);
@@ -173,11 +186,10 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		}
 	}
 	
-	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-	
+	System.out.println(arg0.getX() + " " + arg0.getY());
 		
 	}
 
@@ -216,68 +228,65 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		// TODO Auto-generated method stub
 		System.out.println(arg0.getKeyCode());
 		if(arg0.getKeyCode() == 39) { //right
-			m.setX(m.getX()+10);
+			m.setSpeed(+5);
 			m.changePicture("minerR.png");
-			right = true;
-			left = false;
+			//arr.add(new Rectangle(m.getX()+30, m.getY(), 50, 50));
 		}
 		
 		if(arg0.getKeyCode() == 37) { //left
-			m.setX(m.getX()-10);
+			m.setSpeed(-5);
 			m.changePicture("minerL.png");
-			left = true;
-			right = false;
+			//arr.add(new Rectangle(m.getX()+30, m.getY(), 50, 50));
 		}
 		
 		if(arg0.getKeyCode() == 40) {  //down
-			if(m.getY() >= 150) {
-				m.setY(m.getY()+10);
-			}
-		}
-	/*
-		if(right == true) {
-			if(arg0.getKeyCode() == 32) {
-			m.changePicture("mineR.png");
-			}
+			m.setSped(+5);
+			//arr.add(new Rectangle(m.getX()+30, m.getY(), 50, 50));
 		}
 	
-		if(left == true) {
-			if(arg0.getKeyCode() == 32) {
-			m.changePicture("mineL.png");
-			}
-		}
-		*/
 		if(arg0.getKeyCode() == 38) {   //up
-			m.setY(m.getY()-10);
-			if(m.getY() >= 220) { //if underground while going up
-				arr.add(new Rectangle(m.getX()+30, m.getY(), 50, 50));
+			m.setSped(-5);
+			if(m.getY() >= 220) {
+				//arr.add(new Rectangle(m.getX()+30, m.getY(), 50, 50));
 			}
 		}
-		if(m.getY() >= 170) {
-			if(arg0.getKeyCode() == 39 || arg0.getKeyCode() == 40) {  //going right 
-				m.changePicture("mineR.png");
-				if(m.getY() >= 220) {
-					arr.add(new Rectangle(m.getX()+30, m.getY(), 50, 50));
-				}
-			}
-		}
-		if(m.getY() >= 170) {
-			if(arg0.getKeyCode() == 37 ) {    //underground and left
-				m.changePicture("mineL.png");
-				if(m.getY() >= 220) {
-					arr.add(new Rectangle(m.getX()+30, m.getY(), 50, 50));
-				}
-			}
-		}
+		/*
 		if(m.getY() <= 160) {
 			m.changePicture("miner.png");  //when above ground
 		}
+	
+		if(m.getY() >= 170) {
+			if(arg0.getKeyCode() == 39 || arg0.getKeyCode() == 40) {
+				if(m.getY() >= 220) {
+					arr.add(new Rectangle(m.getX()+30, m.getY(), 50, 50));
+				}
+			}
+		}
+		
+		if(m.getY() >= 170) {
+			if(arg0.getKeyCode() == 37) {
+				if(m.getY() >= 220) {
+					arr.add(new Rectangle(m.getX()+30, m.getY(), 50, 50));
+				}
+			}
+		}
+		*/
 	}
-
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		if(arg0.getKeyCode() == 39) {
+			m.setSpeed(0);
+		}
+		if(arg0.getKeyCode() == 37) {
+			m.setSpeed(0);
+		}
+		if(arg0.getKeyCode() == 38) {
+			m.setSped(0);
+		}
+		if(arg0.getKeyCode() == 40) {
+			m.setSped(0);
+		}
 
 	}
 

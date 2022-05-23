@@ -18,6 +18,8 @@ public class Miner{
 	private double fallSpeed;
 	private boolean grounded;
 	private double gravity;
+	private int speed;
+	private int sped;
 	private Image img; 	
 	private AffineTransform tx;
 	public int getX() {
@@ -44,7 +46,18 @@ public class Miner{
 	public void setHeight(int newHeight) {
 		height = newHeight;
 	}
-
+	public int getSpeed() {
+		return speed;
+	}
+	public void setSpeed(int newSpeed) {
+		speed = newSpeed;
+	}
+	public int getSped() {
+		return sped;
+	}
+	public void setSped(int newSped) {
+		sped = newSped;
+	}
 	
 
 	public Miner(int x, int y) {
@@ -71,7 +84,8 @@ public class Miner{
 		//these are the 2 lines of code needed draw an image on the screen
 		Graphics2D g2 = (Graphics2D) g;
 		g2.drawImage(img, tx, null);
-	
+		x += speed;
+		y += sped;
 		update();
 		
 	}
