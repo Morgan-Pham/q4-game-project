@@ -33,34 +33,52 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	Miner m = new Miner(100, 150); 
 	Background bg = new Background();
 	Background2 bg2 = new Background2();
-	Music me = new Music("bgmusic.wav", false);
 	Bitcoin b;
 	Doge d;
 	Ethereum e;
-	Rectangle r;
+	Music ms = new Music("digdug.wav", true);
+	Music co = new Music("coin.wav", false);
+	Music dig = new Music("dig.wav", false);
+	Music yell = new Music("scream.wav", false);
 	ArrayList<Bitcoin> bList = new ArrayList<Bitcoin>();
 	ArrayList<kirby> kList = new ArrayList<kirby>();
 	ArrayList<Doge> dList = new ArrayList<Doge>();
 	ArrayList<Ethereum> eList = new ArrayList<Ethereum>();
-	ArrayList<Rectangle> arr = new ArrayList<Rectangle>();
+	ArrayList<Rect> arr = new ArrayList<Rect>();
 	private int score = 0;
 	int time = 20;
 	counter timeCounter = new counter();
 
 	public void paint(Graphics g) {
 		bg.paint(g);
+		
 		bg2.paint(g);
 		
-		for(int i = 0; i < arr.size(); i++) {
-				g.fillRect((int)arr.get(i).getX(), (int)arr.get(i).getY(), 50, 50);
-		}
+		for(kirby k: kList) {
+			k.paint(g);
+		Rectangle rm = new Rectangle(m.getX()+5, m.getY(), 85, 60);
+		Rectangle rk = new Rectangle(k.getX(), k.getY(), 60, 60);
+				    
+			if (rm.intersects(rk)==true) {
+				yell.play();
+				k.setX(1000);
+				score-=50;
+			}
+		}  
 		
+	//	for(int i = 0; i < arr.size(); i++) {
+	//			g.fillRect((int)arr.get(i).getX(), (int)arr.get(i).getY(), 50, 50);
+	//	}
+		for(Rect r : arr) {
+			g.fillRect((int)r.getX(), (int)r.getY(), 50, 50);
+			System.out.println(r.getX() + " " + r.getY() );
+		}
 		if(m.getSpeed() > 0 || m.getSpeed() < 0) {
-				arr.add(new Rectangle(m.getX(), m.getY()));
+				arr.add(new Rect(m.getX(), m.getY()));
 				System.out.println(m.getX() + " " + m.getY());
 		} 
 		if(m.getSped() > 0 || m.getSped() < 0) {
-			arr.add(new Rectangle(m.getX(), m.getY()));
+			arr.add(new Rect(m.getX(), m.getY()));
 			//g.fillRect((int)arr.get(i).getX(), (int)arr.get(i).getY(), 50, 50);
 		} 
 		
@@ -70,6 +88,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	    Rectangle rd = new Rectangle(b.getX(), b.getY(), 60, 60);
 	    
 	    if (rm.intersects(rd)==true) {
+	    	co.play();
 	       b.setX(1000);
 	       score+=100;
 	    	}
@@ -81,7 +100,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		Rectangle rd = new Rectangle(d.getX(), d.getY(), 60, 60);
 		    
 		    if (rm.intersects(rd)==true) {
-		       d.setX(1000);
+		    	co.play();
+		    	d.setX(1000);
 		       score+=20;
 		    }
 		}
@@ -93,20 +113,12 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			    
 			if (rm.intersects(re)==true) {
 			   e.setX(1000);
+			   co.play();
 			   score+=70;
 			}
 		}
 		
-		for(kirby k: kList) {
-			k.paint(g);
-		Rectangle rm = new Rectangle(m.getX()+5, m.getY(), 85, 60);
-		Rectangle rk = new Rectangle(k.getX(), k.getY(), 60, 60);
-				    
-			if (rm.intersects(rk)==true) {
-				k.setX(1000);
-				score-=50;
-			}
-		}
+		
 			
 		m.paint(g);
 		if(m.getY() <= 150) {
@@ -165,7 +177,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		f.addKeyListener(this);
 		Timer t = new Timer(16, this);
 		t.start();
-		me.play();
+		ms.play();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
 		for(int i = 0; i<11; i++) {
@@ -229,48 +241,26 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		System.out.println(arg0.getKeyCode());
 		if(arg0.getKeyCode() == 39) { //right
 			m.setSpeed(+5);
+			dig.play();
 			m.changePicture("minerR.png");
-			//arr.add(new Rectangle(m.getX()+30, m.getY(), 50, 50));
 		}
 		
 		if(arg0.getKeyCode() == 37) { //left
 			m.setSpeed(-5);
+			dig.play();
 			m.changePicture("minerL.png");
-			//arr.add(new Rectangle(m.getX()+30, m.getY(), 50, 50));
 		}
 		
 		if(arg0.getKeyCode() == 40) {  //down
 			m.setSped(+5);
-			//arr.add(new Rectangle(m.getX()+30, m.getY(), 50, 50));
+			dig.play();
 		}
 	
 		if(arg0.getKeyCode() == 38) {   //up
 			m.setSped(-5);
-			if(m.getY() >= 220) {
-				//arr.add(new Rectangle(m.getX()+30, m.getY(), 50, 50));
-			}
-		}
-		/*
-		if(m.getY() <= 160) {
-			m.changePicture("miner.png");  //when above ground
-		}
-	
-		if(m.getY() >= 170) {
-			if(arg0.getKeyCode() == 39 || arg0.getKeyCode() == 40) {
-				if(m.getY() >= 220) {
-					arr.add(new Rectangle(m.getX()+30, m.getY(), 50, 50));
-				}
-			}
+			dig.play();
 		}
 		
-		if(m.getY() >= 170) {
-			if(arg0.getKeyCode() == 37) {
-				if(m.getY() >= 220) {
-					arr.add(new Rectangle(m.getX()+30, m.getY(), 50, 50));
-				}
-			}
-		}
-		*/
 	}
 	@Override
 	public void keyReleased(KeyEvent arg0) {
